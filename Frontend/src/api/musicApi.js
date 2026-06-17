@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllSongs = async () => {
   const response = await axios.get(
-    "http://localhost:3000/api/music",
+    "https://tuneflow-qgbu.onrender.com/api/music",
     {
       withCredentials: true
     }
@@ -13,7 +13,7 @@ export const getAllSongs = async () => {
 
 export const getMySongs = async () => {
   const response = await axios.get(
-    "http://localhost:3000/api/music/my-songs",
+    "https://tuneflow-qgbu.onrender.com/api/music/my-songs",
     {
       withCredentials: true
     }
@@ -24,7 +24,7 @@ export const getMySongs = async () => {
 
 export const deleteSong = async (id) => {
   const response = await axios.delete(
-    `http://localhost:3000/api/music/${id}`,
+    `https://tuneflow-qgbu.onrender.com/api/music/${id}`,
     {
       withCredentials: true
     }
@@ -35,7 +35,7 @@ export const deleteSong = async (id) => {
 
 export const getAllAlbums = async () => {
   const response = await axios.get(
-    "http://localhost:3000/api/music/albums",
+    "https://tuneflow-qgbu.onrender.com/api/music/albums",
     {
       withCredentials: true
     }
@@ -47,7 +47,7 @@ export const getAllAlbums = async () => {
 export const getAlbumById = async (albumId) => {
 
   const response = await axios.get(
-    `http://localhost:3000/api/music/albums/${albumId}`,
+    `https://tuneflow-qgbu.onrender.com/api/music/albums/${albumId}`,
     {
       withCredentials: true
     }
@@ -59,7 +59,7 @@ export const getAlbumById = async (albumId) => {
 export const searchSongs = async (query) => {
 
   const response = await axios.get(
-    `http://localhost:3000/api/music/search?query=${query}`,
+    `https://tuneflow-qgbu.onrender.com/api/music/search?query=${query}`,
     {
       withCredentials: true
     }
@@ -71,7 +71,7 @@ export const searchSongs = async (query) => {
 export const toggleLikeSong = async (musicId) => {
 
   const response = await axios.post(
-    `http://localhost:3000/api/music/like/${musicId}`,
+    `https://tuneflow-qgbu.onrender.com/api/music/like/${musicId}`,
     {},
     {
       withCredentials: true
@@ -84,7 +84,7 @@ export const toggleLikeSong = async (musicId) => {
 export const getLikedSongs = async () => {
 
   const response = await axios.get(
-    "http://localhost:3000/api/music/liked",
+    "https://tuneflow-qgbu.onrender.com/api/music/liked",
     {
       withCredentials: true
     }
@@ -96,7 +96,7 @@ export const getLikedSongs = async () => {
 export const addToRecentlyPlayed = async (musicId) => {
 
   const response = await axios.post(
-    `http://localhost:3000/api/music/recent/${musicId}`,
+    `https://tuneflow-qgbu.onrender.com/api/music/recent/${musicId}`,
     {},
     {
       withCredentials: true
@@ -109,7 +109,7 @@ export const addToRecentlyPlayed = async (musicId) => {
 export const getRecentlyPlayed = async () => {
 
   const response = await axios.get(
-    "http://localhost:3000/api/music/recently-played",
+    "https://tuneflow-qgbu.onrender.com/api/music/recently-played",
     {
       withCredentials: true
     }
@@ -121,7 +121,7 @@ export const getRecentlyPlayed = async () => {
 export const getMyPlaylists = async () => {
 
   const response = await axios.get(
-    "http://localhost:3000/api/playlists/my-playlists"
+    "https://tuneflow-qgbu.onrender.com/api/playlists/my-playlists"
   );
 
   return response.data.playlists;
@@ -130,7 +130,7 @@ export const getMyPlaylists = async () => {
 export const createPlaylist = async (name) => {
 
   const response = await axios.post(
-    "http://localhost:3000/api/playlists/create",
+    "https://tuneflow-qgbu.onrender.com/api/playlists/create",
     {
       name
     }
@@ -145,7 +145,7 @@ export const addSongToPlaylist = async (
 ) => {
 
   const response = await axios.post(
-    "http://localhost:3000/api/playlists/add-song",
+    "https://tuneflow-qgbu.onrender.com/api/playlists/add-song",
     {
       playlistId,
       songId
@@ -158,7 +158,7 @@ export const addSongToPlaylist = async (
 export const getPlaylistById = async (playlistId) => {
 
   const response = await axios.get(
-    `http://localhost:3000/api/playlists/${playlistId}`
+    `https://tuneflow-qgbu.onrender.com/api/playlists/${playlistId}`
   );
 
   return response.data.playlist;
@@ -170,7 +170,7 @@ export const removeSongFromPlaylist = async (
 ) => {
 
   const response = await axios.delete(
-    `http://localhost:3000/api/playlists/${playlistId}/song/${songId}`
+    `https://tuneflow-qgbu.onrender.com/api/playlists/${playlistId}/song/${songId}`
   );
 
   return response.data;
@@ -179,7 +179,7 @@ export const removeSongFromPlaylist = async (
 export const deletePlaylist = async (playlistId) => {
 
   const response = await axios.delete(
-    `http://localhost:3000/api/playlists/${playlistId}`
+    `https://tuneflow-qgbu.onrender.com/api/playlists/${playlistId}`
   );
 
   return response.data;
@@ -188,7 +188,7 @@ export const deletePlaylist = async (playlistId) => {
 export const getArtistProfile = async (artistId) => {
 
   const response = await axios.get(
-    `http://localhost:3000/api/music/artist/${artistId}`
+    `https://tuneflow-qgbu.onrender.com/api/music/artist/${artistId}`
   );
 
   return response.data;
@@ -197,7 +197,7 @@ export const getArtistProfile = async (artistId) => {
 export const getProfile = async () => {
 
   const response = await axios.get(
-    "http://localhost:3000/api/auth/profile",
+    "https://tuneflow-qgbu.onrender.com/api/auth/profile",
     {
       withCredentials: true
     }
