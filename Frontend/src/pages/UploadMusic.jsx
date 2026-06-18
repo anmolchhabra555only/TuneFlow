@@ -18,7 +18,7 @@ const UploadMusic = () => {
     try {
 
       const response = await axios.post(
-        "http://localhost:3000/api/music/upload",
+        "https://tuneflow-qgbu.onrender.com",
         formData,
         {
           withCredentials: true
