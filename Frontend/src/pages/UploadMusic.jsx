@@ -18,13 +18,15 @@ const UploadMusic = () => {
     try {
 
       const response = await axios.post(
-        "https://tuneflow-qgbu.onrender.com",
+        "https://tuneflow-qgbu.onrender.com/api/music/upload",
         formData,
         {
-          withCredentials: true
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         }
       );
-
       alert(response.data.message);
 
       setTitle("");
