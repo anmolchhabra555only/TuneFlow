@@ -47,7 +47,7 @@ const CreateAlbum = () => {
     try {
 
       await axios.post(
-        "https://tuneflow-qgbu.onrender.com",
+        "https://tuneflow-qgbu.onrender.com/api/music/album",
         {
           title,
           musics: selectedSongs
