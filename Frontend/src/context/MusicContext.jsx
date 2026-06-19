@@ -1,5 +1,6 @@
 import { addToRecentlyPlayed } from "../api/musicApi";
-import { createContext, useRef, useState } from "react"
+import axios from "axios";
+import { createContext, useRef, useState, useEffect } from "react"
 
 export const MusicContext = createContext()
 
@@ -22,6 +23,30 @@ const MusicProvider = ({ children }) => {
   const [shuffle, setShuffle] = useState(false);
 
   const [repeat, setRepeat] = useState(false);
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get(
+        "https://tuneflow-qgbu.onrender.com/api/auth/profile",
+        {
+          withCredentials: true
+        }
+      );
+  
+      setUser(response.data.user);
+    } catch (err) {
+      setUser(null);
+    }
+  
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const nextSong = () => {
 
@@ -161,6 +186,9 @@ const MusicProvider = ({ children }) => {
         setCurrentIndex,
         nextSong,
         prevSong,
+        user,
+        setUser,
+        loading,
 
         shuffle,
         setShuffle,

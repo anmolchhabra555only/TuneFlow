@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { MusicContext } from "../context/MusicContext";
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
@@ -8,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate();
+  const { setUser } = useContext(MusicContext);
 
   const handleLogin = async (e) => {
 
@@ -30,6 +33,8 @@ const Login = () => {
 
       alert("Login Successful")
 
+      setUser(response.data.user);
+      
       navigate("/home");
 
     } catch (error) {
