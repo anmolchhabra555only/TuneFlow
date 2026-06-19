@@ -116,4 +116,49 @@ async function getProfile(req, res) {
 
 }
 
-module.exports = { registerUser, loginUser, logoutUser, getProfile }
+async function changePassword(req, res) {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({
+        message: "All fields are required"
+      });
+    }
+
+    const user = await userModel.findById(req.user.id);
+
+    const isPasswordValid = await bcrypt.compare(
+      oldPassword,
+      user.password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(400).json({
+        message: "Old password is incorrect"
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      10
+    );
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Password changed successfully"
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: "Internal Server Error"
+    });
+  }
+}
+
+module.exports = { registerUser, loginUser, logoutUser, getProfile, changePassword }
