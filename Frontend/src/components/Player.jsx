@@ -64,11 +64,11 @@ const Player = () => {
 
   return (
 
-    <div className="fixed bottom-0 left-0 lg:left-[280px] w-full lg:w-[calc(100%-280px)] bg-[#181818] border-t border-gray-800 px-6 py-4 flex items-center justify-between">
+    <div className="fixed bottom-0 left-0 lg:left-[280px] w-full lg:w-[calc(100%-280px)] bg-[#181818] border-t border-gray-800 px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
 
       {/* Left */}
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 w-full md:w-auto min-w-0">
 
         <img
           src={currentSong?.image}
@@ -76,35 +76,25 @@ const Player = () => {
           className="w-14 h-14 rounded object-cover"
         />
 
-        <div>
-
-          <h2 className="text-white font-semibold">
-
-            {
-              currentSong
-                ? currentSong.title
-                : "No Song Selected"
-            }
-
+        <div className="min-w-0">
+        <h2 className="text-white font-semibold truncate max-w-[150px] sm:max-w-[220px] md:max-w-xs">
+            {currentSong
+            ? currentSong.title
+            : "No Song Selected"}
           </h2>
 
-          <p className="text-gray-400 text-sm">
-
-            {
-              currentSong
-                ? currentSong.artist
-                : "Unknown Artist"
-            }
-
+          <p className="text-gray-400 text-sm truncate max-w-[180px] md:max-w-xs">
+            {currentSong
+            ? currentSong.artist
+            : "Unknown Artist"}
           </p>
-
         </div>
 
       </div>
 
       {/* Center */}
 
-      <div className="flex flex-col items-center gap-3 flex-1 min-w-0">
+      <div className="flex flex-col items-center gap-3 w-full md:flex-1 min-w-0">
 
       <div className="flex items-center gap-3 md:gap-6 text-white text-lg md:text-xl whitespace-nowrap">
 
