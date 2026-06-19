@@ -12,7 +12,7 @@ const Navbar = ({ setSidebarOpen }) => {
     try {
   
       await axios.post(
-        "https://tuneflow-qgbu.onrender.com",
+        "https://tuneflow-qgbu.onrender.com/api/auth/logout",
         {},
         {
           withCredentials: true
