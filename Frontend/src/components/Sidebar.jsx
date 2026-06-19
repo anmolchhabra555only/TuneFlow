@@ -1,4 +1,5 @@
 import { FaHistory } from "react-icons/fa";
+import { FaList } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { MdAlbum } from "react-icons/md";
 import { FaMusic } from "react-icons/fa";
@@ -87,6 +88,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             >
               <FaHistory />
               <span>Recently Played</span>
+            </Link>
+
+            <Link
+              to="/playlists"
+              className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1f1f1f]"
+            >
+                <FaList />
+              <span>Playlists</span>
             </Link>
 
           <Link
