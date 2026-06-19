@@ -92,7 +92,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <Link
               to="/playlists"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1f1f1f]"
+              className="flex items-center gap-3 hover:text-green-500 transition-all duration-300"
             >
                 <FaList />
               <span>Playlists</span>
