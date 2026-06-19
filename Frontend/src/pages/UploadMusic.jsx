@@ -64,7 +64,7 @@ const UploadMusic = () => {
 
         <input
           type="file"
-          accept=".mp3"
+          accept="audio/*,.mp3,.wav,.m4a"
           onChange={(e)=>setMusic(e.target.files[0])}
           className="w-full"
         />
