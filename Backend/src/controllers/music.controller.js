@@ -20,17 +20,17 @@ const jwt = require("jsonwebtoken");
         message: "Music and image are required"
     });
   }
-      const audioUpload = await imagekit.upload({
-        file: musicFile.buffer,
-        fileName: musicFile.originalname,
-        folder: "/yt-complete-backend/music"
-      });
+      const audioUpload = await uploadFile(
+        musicFile.buffer,
+        "music_" + Date.now(),
+        "yt-complete-backend/music"
+      );
 
-      const imageUpload = await imagekit.upload({
-        file: imageFile.buffer,
-        fileName: imageFile.originalname,
-        folder: "/yt-complete-backend/images"
-      });
+      const imageUpload = await uploadFile(
+        imageFile.buffer,
+        "cover_" + Date.now(),
+        "yt-complete-backend/images"
+      );
   
       const music = await musicModel.create({
         title,
