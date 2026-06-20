@@ -5,6 +5,9 @@ import { MusicContext } from "../context/MusicContext";
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(MusicContext);
 
+  console.log("User:", user);
+  console.log("Loading:", loading);
+
   if (loading) {
     return <div>Loading...</div>;
   }

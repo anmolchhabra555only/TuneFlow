@@ -36,12 +36,16 @@ const MusicProvider = ({ children }) => {
         }
       );
   
+      console.log("Profile Response:", response.data);
+  
       setUser(response.data.user);
     } catch (err) {
-      setUser(null);
-    }
+      console.log("Profile Error:", err.response?.status);
   
-    setLoading(false);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
