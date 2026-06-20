@@ -16,15 +16,26 @@ import Player from "./components/Player";
 import ArtistProfile from "./pages/ArtistProfile"
 import UserProfile from "./pages/UserProfile"
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { MusicContext } from "./context/MusicContext";
 
 const App = () => {
+
+  const { user, loading } = useContext(MusicContext);
   return (
     <>
       <Routes>
   
         <Route
           path="/"
-          element={<Login />}
+          element={
+          loading
+            ? <div>Loading...</div>
+            : user
+            ? <Navigate to="/home" />
+            : <Login />
+          }
         />
   
         <Route
