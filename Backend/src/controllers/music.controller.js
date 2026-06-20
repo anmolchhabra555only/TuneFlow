@@ -12,14 +12,14 @@ const jwt = require("jsonwebtoken");
       const musicFile = req.files.music[0];
       const imageFile = req.files.image[0];
   
-      console.log("FILE RECEIVED:", file?.originalname);
-  
-      if (!file) {
+      console.log("Music:", musicFile?.originalname);
+      console.log("Image:", imageFile?.originalname);
+
+        if (!musicFile || !imageFile) {
         return res.status(400).json({
-          message: "No file received"
-        });
-      }
-  
+        message: "Music and image are required"
+    });
+  }
       const audioUpload = await imagekit.upload({
         file: musicFile.buffer,
         fileName: musicFile.originalname,

@@ -24,9 +24,6 @@ const UploadMusic = () => {
         formData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
         }
       );
       alert(response.data.message);
