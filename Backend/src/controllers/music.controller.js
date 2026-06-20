@@ -9,7 +9,8 @@ const jwt = require("jsonwebtoken");
     try {
   
       const { title } = req.body;
-      const file = req.file;
+      const musicFile = req.files.music[0];
+      const imageFile = req.files.image[0];
   
       console.log("FILE RECEIVED:", file?.originalname);
   
@@ -19,14 +20,23 @@ const jwt = require("jsonwebtoken");
         });
       }
   
-      const result = await uploadFile(
-        file.buffer.toString("base64")
-      );
+      const audioUpload = await imagekit.upload({
+        file: musicFile.buffer,
+        fileName: musicFile.originalname,
+        folder: "/yt-complete-backend/music"
+      });
+
+      const imageUpload = await imagekit.upload({
+        file: imageFile.buffer,
+        fileName: imageFile.originalname,
+        folder: "/yt-complete-backend/images"
+      });
   
       const music = await musicModel.create({
-        uri: result.url,
         title,
         artist: req.user.id,
+        audio: audioUpload.url,
+        image: imageUpload.url
       });
   
       return res.status(201).json({

@@ -5,6 +5,7 @@ const UploadMusic = () => {
 
   const [title, setTitle] = useState("");
   const [music, setMusic] = useState(null);
+  const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
 
@@ -14,6 +15,7 @@ const UploadMusic = () => {
 
     formData.append("title", title);
     formData.append("music", music);
+    formData.append("image", image);
 
     try {
 
@@ -66,6 +68,13 @@ const UploadMusic = () => {
           type="file"
           accept="audio/*,.mp3,.wav,.m4a"
           onChange={(e)=>setMusic(e.target.files[0])}
+          className="w-full"
+        />
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
           className="w-full"
         />
 
