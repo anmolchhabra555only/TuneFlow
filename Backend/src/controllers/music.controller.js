@@ -27,7 +27,7 @@ const jwt = require("jsonwebtoken");
   //   });
   // }
       const audioUpload = await uploadFile(
-        fs.readFileSync(musicFile.path),
+        musicFile.buffer,
          "music_" + Date.now(),
          "yt-complete-backend/music"
       );
@@ -56,8 +56,6 @@ const jwt = require("jsonwebtoken");
           artist: music.artist
         }
       });
-      fs.unlinkSync(musicFile.path);
-
   
     } catch (error) {
       console.log(error);
