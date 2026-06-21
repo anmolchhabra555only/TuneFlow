@@ -1,3 +1,4 @@
+const fs = require("fs");
 const userModel = require("../models/user.model");
 const musicModel = require("../models/music.model");
 const albumModel = require("../models/album.model")
@@ -24,16 +25,19 @@ const jwt = require("jsonwebtoken");
     });
   }
       const audioUpload = await uploadFile(
-        musicFile.buffer,
-        "music_" + Date.now(),
-        "yt-complete-backend/music"
+        fs.readFileSync(musicFile.path),
+         "music_" + Date.now(),
+         "yt-complete-backend/music"
+      );
+  
+      const imageUpload = await uploadFile(
+        fs.readFileSync(imageFile.path),
+          "cover_" + Date.now(),
+          "yt-complete-backend/images"
       );
 
-      const imageUpload = await uploadFile(
-        imageFile.buffer,
-        "cover_" + Date.now(),
-        "yt-complete-backend/images"
-      );
+      fs.unlinkSync(musicFile.path);
+      fs.unlinkSync(imageFile.path);
   
       const music = await musicModel.create({
         title,
