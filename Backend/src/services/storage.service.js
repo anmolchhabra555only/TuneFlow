@@ -6,9 +6,9 @@ const ImageKitClient = new ImageKit({
   urlEndpoint: process.env.ImageKit_URL_ENDPOINT,
 });
 
-console.log("PUBLIC:", process.env.ImageKit_PUBLIC_KEY);
-console.log("PRIVATE:", !!process.env.ImageKit_PRIVATE_KEY);
-console.log("URL:", process.env.ImageKit_URL_ENDPOINT);
+console.log("PUBLIC:", process.env.IMAGEKIT_PUBLIC_KEY);
+console.log("PRIVATE:", !!process.env.IMAGEKIT_PRIVATE_KEY);
+console.log("URL:", process.env.IMAGEKIT_URL_ENDPOINT);
 
 async function uploadFile(
   file,
