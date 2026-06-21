@@ -21,11 +21,11 @@ const jwt = require("jsonwebtoken");
       console.log("Music Size:", musicFile.size);
       // console.log("Image Size:", imageFile.size);
 
-        if (!musicFile || !imageFile) {
-        return res.status(400).json({
-        message: "Music and image are required"
-    });
-  }
+  //       if (!musicFile || !imageFile) {
+  //       return res.status(400).json({
+  //       message: "Music and image are required"
+  //   });
+  // }
       const audioUpload = await uploadFile(
         fs.readFileSync(musicFile.path),
          "music_" + Date.now(),
@@ -38,14 +38,13 @@ const jwt = require("jsonwebtoken");
       //     "yt-complete-backend/images"
       // );
 
-      fs.unlinkSync(musicFile.path);
-      fs.unlinkSync(imageFile.path);
+      // fs.unlinkSync(imageFile.path);
   
       const music = await musicModel.create({
         title,
         artist: req.user.id,
         audio: audioUpload.url,
-        image: imageUpload.url
+        image: ""
       });
   
       return res.status(201).json({
@@ -57,6 +56,8 @@ const jwt = require("jsonwebtoken");
           artist: music.artist
         }
       });
+      fs.unlinkSync(musicFile.path);
+
   
     } catch (error) {
       console.log(error);
