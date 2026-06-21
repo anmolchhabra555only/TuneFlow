@@ -15,6 +15,9 @@ const jwt = require("jsonwebtoken");
       console.log("Music:", musicFile?.originalname);
       console.log("Image:", imageFile?.originalname);
 
+      console.log("Music Size:", musicFile.size);
+      console.log("Image Size:", imageFile.size);
+
         if (!musicFile || !imageFile) {
         return res.status(400).json({
         message: "Music and image are required"

@@ -1,9 +1,9 @@
 const { ImageKit } = require("@imagekit/nodejs");
 
 const ImageKitClient = new ImageKit({
-  publicKey: process.env.ImageKit_PUBLIC_KEY,
-  privateKey: process.env.ImageKit_PRIVATE_KEY,
-  urlEndpoint: process.env.ImageKit_URL_ENDPOINT,
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
 
 console.log("PUBLIC:", process.env.IMAGEKIT_PUBLIC_KEY);
@@ -15,6 +15,9 @@ async function uploadFile(
   fileName,
   folder
 ) {
+  console.log("Uploading:", fileName);
+  console.log("File type:", typeof file);
+
   const result = await ImageKitClient.files.upload({
     file,
     fileName,
@@ -24,4 +27,4 @@ async function uploadFile(
   return result;
 }
 
-module.exports = { uploadFile }
+module.exports = { uploadFile };
