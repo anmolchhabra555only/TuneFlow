@@ -5,7 +5,7 @@ const UploadMusic = () => {
 
   const [title, setTitle] = useState("");
   const [music, setMusic] = useState(null);
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
 
@@ -15,7 +15,7 @@ const UploadMusic = () => {
 
     formData.append("title", title);
     formData.append("music", music);
-    formData.append("image", image);
+    // formData.append("image", image);
 
     try {
 
@@ -68,12 +68,12 @@ const UploadMusic = () => {
           className="w-full"
         />
 
-        <input
+        {/* <input
           type="file"
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
           className="w-full"
-        />
+        /> */}
 
         <button
           className="bg-green-500 px-5 py-3 rounded cursor-pointer"

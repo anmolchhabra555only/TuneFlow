@@ -10,14 +10,16 @@ const jwt = require("jsonwebtoken");
     try {
   
       const { title } = req.body;
-      const musicFile = req.files.music[0];
-      const imageFile = req.files.image[0];
+
+      const musicFile = req.file;
+      // const musicFile = req.files.music[0];
+      // const imageFile = req.files.image[0];
   
       console.log("Music:", musicFile?.originalname);
-      console.log("Image:", imageFile?.originalname);
+      // console.log("Image:", imageFile?.originalname);
 
       console.log("Music Size:", musicFile.size);
-      console.log("Image Size:", imageFile.size);
+      // console.log("Image Size:", imageFile.size);
 
         if (!musicFile || !imageFile) {
         return res.status(400).json({
@@ -30,11 +32,11 @@ const jwt = require("jsonwebtoken");
          "yt-complete-backend/music"
       );
   
-      const imageUpload = await uploadFile(
-        fs.readFileSync(imageFile.path),
-          "cover_" + Date.now(),
-          "yt-complete-backend/images"
-      );
+      // const imageUpload = await uploadFile(
+      //   fs.readFileSync(imageFile.path),
+      //     "cover_" + Date.now(),
+      //     "yt-complete-backend/images"
+      // );
 
       fs.unlinkSync(musicFile.path);
       fs.unlinkSync(imageFile.path);
