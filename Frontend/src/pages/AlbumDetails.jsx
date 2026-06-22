@@ -76,7 +76,7 @@ const AlbumDetails = () => {
               }}
             >
               <source
-                src={song.uri}
+                src={song.audio}
                 type="audio/mpeg"
               />
             </audio>

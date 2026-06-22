@@ -32,11 +32,11 @@ const MainLayout = () => {
           _id: song._id,
           title: song.title,
           artist: song.artist.username,
-          audio: song.uri,
-          image: music1,
+          audio: song.audio || song.uri,
+          image: song.image || music1,
           likedBy: song.likedBy
-        }))
-  
+        }));
+        
         setSongsState(formattedSongs)
   
         setSongs(formattedSongs)

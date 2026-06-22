@@ -87,7 +87,7 @@ const PlaylistDetails = () => {
             _id: song._id,
             title: song.title,
             artist: playlist.user.username,
-            audio: song.uri,
+            audio: song.audio,
             image: music1
           },
             0

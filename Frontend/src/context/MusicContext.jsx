@@ -85,10 +85,6 @@ const MusicProvider = ({ children }) => {
     
     setQueue(upcomingSongs);
   
-    setTimeout(() => {
-      audioRef.current.play();
-    }, 100);
-  
     setIsPlaying(true);
   
   };
@@ -106,9 +102,6 @@ const MusicProvider = ({ children }) => {
   
     setCurrentSong(songs[prevIndex])
   
-    setTimeout(() => {
-      audioRef.current.play()
-    }, 100)
   
     setIsPlaying(true)
   }
@@ -150,11 +143,6 @@ const MusicProvider = ({ children }) => {
 
       setCurrentSong(song)
       setCurrentIndex(index)
-
-      setTimeout(() => {
-        audioRef.current.play()
-      }, 100)
-
       setIsPlaying(true)
 
       try {
