@@ -6,65 +6,34 @@ const {uploadFile} = require("../services/storage.service")
 const jwt = require("jsonwebtoken");
 
 
-  async function createMusic(req, res) {
-    try {
-  
-      const { title } = req.body;
+async function createMusic(req, res) {
+  try {
+    const {
+      title,
+      audio,
+      image
+    } = req.body;
 
-      const musicFile = req.file;
-      // const musicFile = req.files.music[0];
-      // const imageFile = req.files.image[0];
-  
-      console.log("Music:", musicFile?.originalname);
-      // console.log("Image:", imageFile?.originalname);
+    const music = await musicModel.create({
+      title,
+      artist: req.user.id,
+      audio,
+      image
+    });
 
-      console.log("Music Size:", musicFile.size);
-      // console.log("Image Size:", imageFile.size);
+    return res.status(201).json({
+      message: "Music Created Successfully",
+      music
+    });
 
-  //       if (!musicFile || !imageFile) {
-  //       return res.status(400).json({
-  //       message: "Music and image are required"
-  //   });
-  // }
-      const audioUpload = await uploadFile(
-        musicFile.buffer,
-         "music_" + Date.now(),
-         "yt-complete-backend/music"
-      );
-  
-      // const imageUpload = await uploadFile(
-      //   fs.readFileSync(imageFile.path),
-      //     "cover_" + Date.now(),
-      //     "yt-complete-backend/images"
-      // );
+  } catch (error) {
+    console.log(error);
 
-      // fs.unlinkSync(imageFile.path);
-  
-      const music = await musicModel.create({
-        title,
-        artist: req.user.id,
-        audio: audioUpload.url,
-        image: ""
-      });
-  
-      return res.status(201).json({
-        message: "Music Created Successfully",
-        music: {
-          id: music._id,
-          title: music.title,
-          uri: music.uri,
-          artist: music.artist
-        }
-      });
-  
-    } catch (error) {
-      console.log(error);
-  
-      return res.status(500).json({
-        message: error.message
-      });
-    }
+    return res.status(500).json({
+      message: error.message
+    });
   }
+}
 
 async function createAlbum(req, res){
 
