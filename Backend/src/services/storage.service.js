@@ -17,6 +17,7 @@ async function uploadFile(
 ) {
   console.log("Uploading:", fileName);
   console.log("File size:", file.length || file.byteLength);
+  console.log("Before ImageKit Upload");
 
   const result = await ImageKitClient.files.upload({
     file,
@@ -24,6 +25,7 @@ async function uploadFile(
     folder
   });
 
+  console.log("After ImageKit Upload");
   return result;
 }
 
