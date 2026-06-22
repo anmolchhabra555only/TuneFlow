@@ -4,40 +4,29 @@ import axios from "axios";
 const UploadMusic = () => {
 
   const [title, setTitle] = useState("");
-  const [music, setMusic] = useState(null);
-  // const [image, setImage] = useState(null);
+
+  const [audio, setAudio] = useState("");
+  const [image, setImage] = useState("");
 
   const handleSubmit = async (e) => {
 
+    <h1 className="text-red-500 text-5xl">
+       TEST TEST TEST
+    </h1>
+
     e.preventDefault();
 
-    const formData = new FormData();
-
-    formData.append("title", title);
-    formData.append("music", music);
-    // formData.append("image", image);
-
-    try {
-
-      const response = await axios.post(
-        "https://tuneflow-qgbu.onrender.com/api/music/upload",
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-      alert(response.data.message);
-
-      setTitle("");
-      setMusic(null);
-
-    } catch (err) {
-
-      console.log(err);
-
-      alert("Upload Failed");
-
-    }
+    const response = await axios.post(
+      "https://tuneflow-qgbu.onrender.com/api/music/upload",
+      {
+        title,
+        audio,
+        image
+      },
+      {
+        withCredentials: true
+      }
+    );
 
   };
 
@@ -62,18 +51,19 @@ const UploadMusic = () => {
         />
 
         <input
-          type="file"
-          accept="audio/*,.mp3,.wav,.m4a"
-          onChange={(e)=>setMusic(e.target.files[0])}
-          className="w-full"
+          type="text"
+          placeholder="Audio URL"
+          value={audio}
+          onChange={(e) => setAudio(e.target.value)}
         />
 
-        {/* <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-          className="w-full"
-        /> */}
+        <input
+          type="text"
+          placeholder="Image URL"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+        />
+
 
         <button
           className="bg-green-500 px-5 py-3 rounded cursor-pointer"
