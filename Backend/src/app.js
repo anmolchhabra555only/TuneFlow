@@ -23,5 +23,9 @@ app.use('/api/auth', authRoutes)
 app.use('/api/music', musicRoutes)
 app.use("/api/playlists", playlistRoutes)
 
+app.get("/", (req, res) => {
+  res.status(200).send("TuneFlow Backend is running 🚀");
+});
+
 
 module.exports = app;
