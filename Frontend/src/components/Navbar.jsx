@@ -2,8 +2,12 @@ import { FaUserCircle } from "react-icons/fa"
 import { HiMenuAlt3 } from "react-icons/hi"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { MusicContext } from "../context/MusicContext";
 
 const Navbar = ({ setSidebarOpen }) => {
+
+  const { setUser, audioRef, setCurrentSong } = useContext(MusicContext);
 
   const navigate = useNavigate();
 
@@ -19,7 +23,17 @@ const Navbar = ({ setSidebarOpen }) => {
         }
       );
   
-      navigate("/");
+      // Stop song
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+  
+      // Remove current song
+      setCurrentSong(null);
+  
+      // Logout
+      setUser(null);
+  
+      navigate("/", { replace: true });
   
     } catch (err) {
   

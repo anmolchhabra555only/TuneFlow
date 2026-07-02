@@ -39,11 +39,9 @@ const MusicProvider = ({ children }) => {
       console.log("Profile Response:", response.data);
   
       setUser(response.data.user);
-    } catch (err) {
-      console.log("Profile Error:", err.response?.status);
-  
+    } catch {
       setUser(null);
-    } finally {
+    }finally {
       setLoading(false);
     }
   };
@@ -51,6 +49,21 @@ const MusicProvider = ({ children }) => {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  useEffect(() => {
+    if (!currentSong || !audioRef.current) return;
+  
+    const playAudio = async () => {
+      try {
+        await audioRef.current.play();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    playAudio();
+  
+  }, [currentSong]);
 
   const nextSong = () => {
 
@@ -108,56 +121,30 @@ const MusicProvider = ({ children }) => {
 
   const playSong = async (song, index = 0) => {
 
-    if (songs.length > 0) {
+    if (currentSong?.audio === song.audio) {
+  
+      if (isPlaying) {
+  
+        audioRef.current.pause();  
 
-      const upcomingSongs = songs.filter(
-        (_, i) => i > index
-      );
+      } else {
 
-    console.log("Queue:", upcomingSongs);
-
-    
-      setQueue(upcomingSongs);
-    
+        await audioRef.current.play();  
+      }
+  
+      return;
     }
 
-    console.log("Playing Song:", song);
-
-    setCurrentIndex(index)
-
-    if(currentSong?.audio === song.audio){
-
-      if(isPlaying){
-        audioRef.current.pause()
-        setIsPlaying(false)
-      }
-
-      else{
-        audioRef.current.play()
-        setIsPlaying(true)
-      }
-
+    try {
+      await addToRecentlyPlayed(song._id);
+    } catch (err) {
+      console.log(err);
     }
-
-    else{
-
-      setCurrentSong(song)
-      setCurrentIndex(index)
-      setIsPlaying(true)
-
-      try {
-
-        await addToRecentlyPlayed(song._id);
-      
-      } catch (err) {
-      
-        console.log(err);
-      
-      }
-
-    }
-
-  }
+  
+    setCurrentSong(song);
+    setCurrentIndex(index);
+  
+  };
 
 
   return (
@@ -166,6 +153,7 @@ const MusicProvider = ({ children }) => {
       value={{
         audioRef,
         currentSong,
+        setCurrentSong,
         isPlaying,
         playSong,
         currentTime,
@@ -196,28 +184,33 @@ const MusicProvider = ({ children }) => {
       <audio
         ref={audioRef}
         src={currentSong?.audio}
-        onEnded={() => {
 
-          if (repeat) {
-        
-            audioRef.current.currentTime = 0;
-        
-            audioRef.current.play();
-        
-          } else {
-        
-            nextSong();
-        
-          }
-        
-        }}
-        onTimeUpdate={() => {
-          setCurrentTime(audioRef.current.currentTime)
-        }}
-        onLoadedMetadata={() => {
-          setDuration(audioRef.current.duration)
-        }}
-      />
+       onPlay={() => setIsPlaying(true)}
+       onPause={() => setIsPlaying(false)}
+
+       onEnded={() => {
+
+      if (repeat) {
+
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+
+    } else {
+
+      nextSong();
+
+    }
+
+  }}
+
+  onTimeUpdate={() => {
+    setCurrentTime(audioRef.current.currentTime);
+  }}
+
+  onLoadedMetadata={() => {
+    setDuration(audioRef.current.duration);
+  }}
+/>
 
     </MusicContext.Provider>
   )

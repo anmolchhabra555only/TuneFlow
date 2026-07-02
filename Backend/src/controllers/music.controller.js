@@ -7,18 +7,38 @@ const jwt = require("jsonwebtoken");
 
 
 async function createMusic(req, res) {
+
+  console.log("CREATE MUSIC CALLED");
+  console.log(req.body);
+  console.log(req.file);
+  
   try {
-    const {
-      title,
-      audio,
-      image
-    } = req.body;
+
+    const { title } = req.body;
+
+    const musicFile = req.file;
+
+    if (!musicFile) {
+      return res.status(400).json({
+        message: "Music file is required"
+      });
+    }
+
+    console.log(req.file);
+
+    const audioUpload = await uploadFile(
+      musicFile.buffer,
+      "music_" + Date.now(),
+      "yt-complete-backend/music"
+    );
+
+    console.log(audioUpload);
 
     const music = await musicModel.create({
       title,
       artist: req.user.id,
-      audio,
-      image
+      audio: audioUpload.url,
+      image: ""
     });
 
     return res.status(201).json({
@@ -27,11 +47,13 @@ async function createMusic(req, res) {
     });
 
   } catch (error) {
+
     console.log(error);
 
     return res.status(500).json({
       message: error.message
     });
+
   }
 }
 
@@ -81,7 +103,16 @@ async function getAllAlbums(req, res) {
 async function getAlbumById(req, res) {
   const albumId = req.params.albumId;
 
-  const album = await albumModel.findById(albumId).populate("artist", "username email").populate("musics")
+  const album = await albumModel
+    .findById(albumId)
+    .populate("artist", "username email")
+    .populate({
+      path: "musics",
+      populate: {
+        path: "artist",
+        select: "username email",
+      },
+    });
 
   return res.status(200).json({
     message: "Album fetched successfully",
@@ -249,4 +280,37 @@ async function getArtistProfile(req, res) {
 
 }
 
-module.exports = { createMusic, createAlbum, getAllMusics, getAllAlbums, getAlbumById, getMySongs, deleteMusic, searchSongs, toggleLike, getLikedSongs, addToRecentlyPlayed, getRecentlyPlayed, getArtistProfile }  
+async function deleteAlbum(req, res) {
+  try {
+    const { albumId } = req.params;
+
+    const album = await albumModel.findById(albumId);
+
+    if (!album) {
+      return res.status(404).json({
+        message: "Album not found"
+      });
+    }
+
+    if (album.artist.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Unauthorized"
+      });
+    }
+
+    await albumModel.findByIdAndDelete(albumId);
+
+    res.status(200).json({
+      message: "Album deleted successfully"
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: err.message
+    });
+  }
+}
+
+module.exports = { createMusic, createAlbum, getAllMusics, getAllAlbums, getAlbumById, getMySongs, deleteMusic, searchSongs, toggleLike, getLikedSongs, addToRecentlyPlayed, getRecentlyPlayed, getArtistProfile, deleteAlbum }  

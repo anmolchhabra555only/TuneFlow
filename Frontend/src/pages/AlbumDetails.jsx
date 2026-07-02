@@ -1,36 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getAlbumById } from "../api/musicApi";
+import { MusicContext } from "../context/MusicContext";
+import music1 from "../assets/music1.jfif";
+import { deleteAlbum } from "../api/musicApi";
+import { useNavigate } from "react-router-dom";
 
 const AlbumDetails = () => {
 
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+
+    const confirmDelete = window.confirm(
+      "Delete this album?"
+    );
+  
+    if (!confirmDelete) return;
+  
+    try {
+  
+      await deleteAlbum(album._id);
+  
+      alert("Album deleted successfully");
+  
+      navigate("/");
+  
+    } catch (err) {
+  
+      console.log(err);
+  
+    }
+  
+  };
+
   const { albumId } = useParams();
+
+  const { playSong, setSongs } = useContext(MusicContext);
 
   const [album, setAlbum] = useState(null);
 
-  const [currentAudio, setCurrentAudio] = useState(null);
-
   useEffect(() => {
-
     const fetchAlbum = async () => {
-
       try {
-
         const data = await getAlbumById(albumId);
-
         setAlbum(data);
-
       } catch (err) {
-
         console.log(err);
-
       }
-
     };
 
     fetchAlbum();
-
   }, [albumId]);
+
+  useEffect(() => {
+    if (album) {
+      setSongs(album.musics);
+    }
+  }, [album, setSongs]);
 
   if (!album) {
     return (
@@ -47,39 +74,63 @@ const AlbumDetails = () => {
         {album.title}
       </h1>
 
+      <button
+        onClick={handleDelete}
+        className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded mt-4"
+      >
+        Delete Album
+      </button>
+
       <p className="text-gray-400 mb-8">
         Artist: {album.artist?.username}
       </p>
 
       <div className="space-y-3">
 
-        {album.musics.map((song) => (
+        {album.musics.map((song, index) => (
 
           <div
             key={song._id}
-            className="bg-zinc-900 p-4 rounded flex justify-between"
+            onClick={() =>
+              playSong(
+                {
+                  ...song,
+                  artist:
+                    typeof song.artist === "object"
+                      ? song.artist.username
+                      : song.artist,
+                  image: song.image || music1,
+                },
+                index
+              )
+            }
+            className="bg-zinc-900 p-4 rounded flex items-center justify-between cursor-pointer hover:bg-zinc-800"
           >
 
-            <span>{song.title}</span>
+            <div className="flex items-center gap-4">
 
-            <audio controls
-              onPlay={(e) => {
-
-                if (
-                  currentAudio &&
-                  currentAudio !== e.target
-                ) {
-                  currentAudio.pause();
-                }
-            
-                setCurrentAudio(e.target);
-              }}
-            >
-              <source
-                src={song.audio}
-                type="audio/mpeg"
+              <img
+                src={song.image || music1}
+                alt={song.title}
+                className="w-14 h-14 rounded object-cover"
               />
-            </audio>
+
+              <div>
+                <h3 className="font-semibold">
+                  {song.title}
+                </h3>
+
+                <p className="text-gray-400 text-sm">
+                  {album.artist?.username}
+                </p>
+
+              </div>
+
+            </div>
+
+            <span className="text-green-500">
+              ▶
+            </span>
 
           </div>
 

@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 async function authArtist(req, res, next){
 
+  console.log("Cookies:", req.cookies);
+
   const token = req.cookies.token;
 
   if(!token){
@@ -32,6 +34,9 @@ async function authUser(req, res, next) {
   console.log("Cookies:", req.cookies);
 
   const token = req.cookies.token;
+
+  console.log("Cookies:", req.cookies);
+  console.log("Token:", token);
   
   if(!token){
     return res.status(401).json({message: "Unauthorized"})
@@ -40,6 +45,8 @@ async function authUser(req, res, next) {
   try{
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+    console.log("Decoded Token:", decoded);
     
     if(decoded.role !== "user" &&
        decoded.role !== "artist"

@@ -1,4 +1,5 @@
 import { FaVolumeUp } from "react-icons/fa"
+import music1 from "../assets/music1.jfif";
 import {
   FaPlay,
   FaPause
@@ -71,7 +72,7 @@ const Player = () => {
       <div className="flex items-center gap-4 w-full md:w-auto min-w-0">
 
         <img
-          src={currentSong?.image}
+          src={currentSong?.image || music1}
           alt="music"
           className="w-14 h-14 rounded object-cover"
         />
@@ -84,9 +85,11 @@ const Player = () => {
           </h2>
 
           <p className="text-gray-400 text-sm truncate max-w-[180px] md:max-w-xs">
-            {currentSong
+            {!currentSong
+            ? "Unknown Artist"
+            : typeof currentSong.artist === "string"
             ? currentSong.artist
-            : "Unknown Artist"}
+            : currentSong.artist?.username}
           </p>
         </div>
 

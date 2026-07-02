@@ -205,3 +205,15 @@ export const getProfile = async () => {
 
   return response.data.user;
 };
+
+export const deleteAlbum = async (albumId) => {
+
+  const response = await axios.delete(
+    `https://tuneflow-qgbu.onrender.com/api/music/album/${albumId}`,
+    {
+      withCredentials: true
+    }
+  );
+
+  return response.data;
+};

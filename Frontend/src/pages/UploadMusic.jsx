@@ -1,33 +1,50 @@
 import { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const UploadMusic = () => {
 
   const [title, setTitle] = useState("");
 
-  const [audio, setAudio] = useState("");
-  const [image, setImage] = useState("");
+  const [music, setMusic] = useState(null);
 
   const handleSubmit = async (e) => {
 
-    <h1 className="text-red-500 text-5xl">
-       TEST TEST TEST
-    </h1>
-
     e.preventDefault();
-
-    const response = await axios.post(
-      "https://tuneflow-qgbu.onrender.com/api/music/upload",
-      {
-        title,
-        audio,
-        image
-      },
-      {
-        withCredentials: true
-      }
-    );
-
+  
+    console.log("BUTTON CLICKED");
+  
+    try {
+  
+      const formData = new FormData();
+  
+      formData.append("title", title);
+      formData.append("music", music);
+  
+      await axios.post(
+        "https://tuneflow-qgbu.onrender.com/api/music/upload",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
+  
+      toast.success("Song uploaded successfully 🎵");
+  
+      setTitle("");
+      setMusic(null);
+  
+    } catch (err) {
+  
+      console.log(err);
+  
+      toast.error("Upload failed ❌");
+  
+    }
+  
   };
 
   return (
@@ -51,17 +68,9 @@ const UploadMusic = () => {
         />
 
         <input
-          type="text"
-          placeholder="Audio URL"
-          value={audio}
-          onChange={(e) => setAudio(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Image URL"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          type="file"
+          accept="audio/*"
+          onChange={(e) => setMusic(e.target.files[0])}
         />
 
 

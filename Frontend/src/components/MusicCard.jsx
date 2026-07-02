@@ -1,3 +1,4 @@
+import music1 from "../assets/music1.jfif";
 import { Link } from "react-router-dom";
 import { FaPlay, FaHeart } from "react-icons/fa"
 import { useContext, useState } from "react"
@@ -24,7 +25,7 @@ const MusicCard = ({ song, index }) => {
     <div
       onClick={() => playSong(song, index)}
       className={`
-
+      relative
     bg-[#181818]
       p-4
       rounded-lg
@@ -44,7 +45,7 @@ const MusicCard = ({ song, index }) => {
       <div className="relative">
 
         <img
-          src={song.image}
+          src={song.image ? song.image : music1}
           alt="music"
           className="rounded-lg mb-4 h-[200px] w-full object-cover"
         />
@@ -115,10 +116,21 @@ const MusicCard = ({ song, index }) => {
   +
     </button>
 
-  {
-    showPlaylists && (
-
-    <div className="mt-3 bg-zinc-800 rounded p-2">
+    {
+      showPlaylists && (
+      <div
+      className="
+        absolute
+        top-24
+        left-4
+        right-4
+        bg-zinc-800
+        rounded
+        p-2
+        shadow-xl
+        z-50
+      "
+    >
 
       {
         playlists.map((playlist) => (
@@ -137,6 +149,8 @@ const MusicCard = ({ song, index }) => {
                 );
 
                 alert("Song Added");
+
+                setShowPlaylists(false);
 
               } catch (err) {
 
