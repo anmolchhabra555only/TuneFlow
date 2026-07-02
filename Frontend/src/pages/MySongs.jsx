@@ -1,6 +1,8 @@
 import { deleteSong } from "../api/musicApi";
 import { useEffect, useState } from "react";
 import { getMySongs } from "../api/musicApi";
+import { useContext } from "react";
+import { MusicContext } from "../context/MusicContext";
 
 const MySongs = () => {
 
@@ -8,6 +10,13 @@ const MySongs = () => {
   const [selectedSongId, setSelectedSongId] = useState(null);
 
   const [songs, setSongs] = useState([]);
+
+  const {
+    currentSong,
+    setCurrentSong,
+    audioRef,
+    setCurrentIndex
+  } = useContext(MusicContext);
 
   useEffect(() => {
 
@@ -33,6 +42,14 @@ const MySongs = () => {
     try {
   
       await deleteSong(selectedSongId);
+  
+      // Agar deleted song hi play ho raha hai
+      if (currentSong?._id === selectedSongId) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+        setCurrentSong(null);
+        setCurrentIndex(0);
+      }
   
       setSongs(
         songs.filter(song => song._id !== selectedSongId)
